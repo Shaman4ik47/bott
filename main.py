@@ -131,6 +131,22 @@ class ImageRenderer:
                 except Exception:
                     logging.warning("Failed to load font at %s", abs_path)
 
+        # 1b) Try any font file from local ./fonts directory (TTF/OTF)
+        try:
+            fonts_dir = APP_DIR / "fonts"
+            if fonts_dir.exists():
+                # Prefer Roboto if present, otherwise first available
+                candidates: List[Path] = []
+                for ext in ("*.ttf", "*.otf"):
+                    candidates.extend(sorted(fonts_dir.rglob(ext)))
+                if candidates:
+                    # Try to prefer Roboto
+                    preferred = [p for p in candidates if "roboto" in p.name.lower() and "regular" in p.name.lower()]
+                    chosen = preferred[0] if preferred else candidates[0]
+                    return ImageFont.truetype(str(chosen), font_size)
+        except Exception:
+            pass
+
         # 2) Try common Windows fonts
         try:
             win_dir = Path(os.environ.get("WINDIR", "C:/Windows"))
