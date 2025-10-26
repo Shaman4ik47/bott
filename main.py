@@ -152,6 +152,10 @@ class ImageRenderer:
         # 2b) Try common Linux fonts (Render/Docker)
         try:
             linux_candidates: List[Path] = [
+                # Roboto (preferred to mimic local setups)
+                Path("/usr/share/fonts/truetype/roboto/Roboto-Regular.ttf"),
+                Path("/usr/share/fonts/truetype/roboto/hinted/Roboto-Regular.ttf"),
+                # DejaVu / Liberation fallbacks
                 Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
                 Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
                 Path("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"),
@@ -159,6 +163,24 @@ class ImageRenderer:
             for cand in linux_candidates:
                 if cand.exists():
                     return ImageFont.truetype(str(cand), font_size)
+        except Exception:
+            pass
+
+        # 2c) If caller provided only a file name, try to locate it in system font directories
+        try:
+            if font_path:
+                requested_name = Path(font_path).name
+                if requested_name:
+                    search_dirs: List[Path] = [
+                        Path("/usr/share/fonts"),
+                        Path("/usr/local/share/fonts"),
+                        Path.home() / ".fonts",
+                    ]
+                    for base in search_dirs:
+                        if base.exists():
+                            for found in base.rglob(requested_name):
+                                if found.exists():
+                                    return ImageFont.truetype(str(found), font_size)
         except Exception:
             pass
 

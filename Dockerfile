@@ -8,7 +8,7 @@ WORKDIR /app
 
 # System deps for pillow fonts (optional)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    fonts-dejavu-core \
+    fonts-dejavu-core fonts-roboto \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt ./
