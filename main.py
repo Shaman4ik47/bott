@@ -149,6 +149,19 @@ class ImageRenderer:
         except Exception:
             pass
 
+        # 2b) Try common Linux fonts (Render/Docker)
+        try:
+            linux_candidates: List[Path] = [
+                Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
+                Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
+                Path("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"),
+            ]
+            for cand in linux_candidates:
+                if cand.exists():
+                    return ImageFont.truetype(str(cand), font_size)
+        except Exception:
+            pass
+
         # 3) Try Pillow-bundled DejaVu
         try:
             dejavu_path = Path(PIL.__file__).resolve().parent / "DejaVuSans.ttf"
