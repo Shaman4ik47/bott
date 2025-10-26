@@ -1,0 +1,28 @@
+{
+  "base_image_path": "tools/bot.jpeg",
+  "output_format": "JPEG",
+  "time_format": "%Y/%m/%d %H:%M:%S",
+  "text": {
+    "sum": {
+      "x": 1066,
+      "y": 475,
+      "font_path": "fonts/Roboto-Regular.ttf",
+      "font_size": 44,
+      "fill": "#00A79C",
+      "anchor": "ra",
+      "bold": true,
+      "bold_offset": 1,
+      "erase_rect": { "x": 700, "y": 470, "w": 400, "h": 60, "fill": "#FFFFFF" }
+    },
+    "time": {
+      "x": 36,
+      "y": 536,
+      "font_path": "fonts/Roboto-Regular.ttf",
+      "font_size": 32,
+      "fill": "#616161",
+      "anchor": "la",
+      "erase_rect": { "x": 29, "y": 528, "w": 520, "h": 64, "fill": "#FFFFFF" }
+    }
+  }
+}
+

@@ -1,0 +1,26 @@
+[Unit]
+Description=Telegram Image Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Укажите путь к каталогу, куда скопируете проект на сервере (пример: /opt/telegram-image-bot)
+WorkingDirectory=/opt/telegram-image-bot
+
+# Вариант 1: системный python
+ExecStart=/usr/bin/python3 -u main.py
+
+# Вариант 2: через виртуальное окружение (раскомментируйте и поправьте путь)
+# ExecStart=/opt/telegram-image-bot/.venv/bin/python -u main.py
+
+Environment=PYTHONUNBUFFERED=1
+# Токен можно задать через переменную окружения ИЛИ положить BOT_TOKEN.txt рядом с main.py
+# Environment=BOT_TOKEN=1234567890:AA...your_token_here
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+

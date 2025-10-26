@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  telegram-bot:
+    build: .
+    container_name: telegram-image-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    command: ["python", "-u", "main.py"]
+
